@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="359dp"
+        android:gravity="center"
+        android:text="Welcome\nto\nEPIC SAUCE"
+        android:textSize="60sp" />
+
+    <Button
+        android:layout_width="337dp"
+        android:layout_height="124dp"
+        android:layout_gravity="center"
+        android:text="Sauce of the day" />
+
+    <Button
+        android:layout_width="337dp"
+        android:layout_height="124dp"
+        android:layout_gravity="center"
+        android:text="Food Selection" />
+
+</LinearLayout>
