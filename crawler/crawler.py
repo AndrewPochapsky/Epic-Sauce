@@ -1,7 +1,9 @@
 import bs4
-import csv
-from pathlib import Path
+
+import requests
+import utils
 import functions as f
+import json
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
@@ -17,7 +19,16 @@ def scrape_cuisines():
         'div', attrs={'class:', 'gel-layout__item promo__title-container'})
     for c in cuisines:
         title = c.find('h3', attrs={'class:', 'promo__title gel-pica'}).text
-        scrape_cuisine(title)
+        new_title = ""
+        for word in title.split(" "):
+            new_title += word + '_'
+
+        new_title = new_title[0 : len(new_title) - 1]
+
+        print("starting to scrape " + new_title)
+        rows = scrape_cuisine(new_title)
+        if(rows != None):
+            utils.dataToCsv(rows, 'output/', 'data.csv', [], overwrite=False)
 
         
 
@@ -36,32 +47,56 @@ def scrape_cuisine(title):
         return None
     
     #If we get here, then the cuisine is valid (has enough recipes)
-    scrape_recipies("www.bbc.com{0}".format(all_tag['href']))
+    
+    rows = scrape_recipies(
+        "https://www.bbc.com{0}".format(all_tag['href']), title)
+    
+    return rows
 
-def scrape_recipies(url):
-
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    index = 0
+def scrape_recipies(url, cuisine):
+    rows = []
 
     res = requests.get(url, headers=headers)
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
 
-    all_recipies = soup.find_all(
-        'div', attrs={'class:', 'gel-layout__item gel-1/2 gel-1/3@m gel-1/4@xl'})
-
-    for recipie in all_recipies:
-        href = recipie.find(
-            'a', attrs={'class:', 'promo promo__istats promo__brunch'})['href']
-        scrape_recipie("www.bbc.com{0}".format(href))
+    az_boxes = soup.find_all('li', attrs={
+                             'class:', 'az-keyboard__list-item gel-layout__item gel-1/12@l gel-2/12@s gel-2/12'})
+    for box in az_boxes:
         
-def scrape_recipie(url):
+        if(box.find('span', attrs={'class:', 'az-keyboard__link az-keyboard__link--disabled gel-pica-bold'}) == None):
+
+            print(box)
+
+
+            res = requests.get("https://www.bbc.com" + box.find('a')['href'], headers=headers)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+
+            container = soup.find(
+                'div', attrs={'class:', 'gel-wrap promo-collection__container cuisine-page'})
+
+            all_recipies = container.find_all(
+                'div', attrs={'class:', 'gel-layout__item gel-1/2 gel-1/3@m gel-1/4@xl'})
+            
+            for recipie in all_recipies:
+                href = recipie.find('a')['href']
+                row = scrape_recipie("https://www.bbc.com{0}".format(href), cuisine)
+                rows.append(row)
+            
+    return rows
+        
+       
+def scrape_recipie(url, cuisine):
 
     data_row = []
 
     res = requests.get(url, headers=headers)
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
+
+    title = soup.find(
+        'h1', attrs={'class:', 'gel-trafalgar content-title__text'}).text
 
     prep_time = soup.find('p', attrs={'class:', 'recipe-metadata__prep-time'}).text
     cook_time = soup.find('p', attrs={'class:', 'recipe-metadata__cook-time'}).text
@@ -72,16 +107,22 @@ def scrape_recipie(url):
     ingredient_list = []
     steps_list = []
 
+   
+
     for ingredient in ingredients:
+        
         amount = ingredient.text
-        name = ingredient.find('a').text
-        ingredient_list.append(amount + name)
+        if(ingredient.find('a') != None):
+            name = ingredient.find('a').text
+            ingredient_list.append(amount + name)
+        else:
+            ingredient_list.append(amount)
 
 
     ingredients_string = ""
     for gred in ingredient_list:
         ingredients_string += gred +" "
-
+    
     steps = soup.find_all(
         'p', attrs={'class:', 'recipe-method__list-item-text'})
 
@@ -90,46 +131,16 @@ def scrape_recipie(url):
 
     img = soup.find('img', attrs={'class:', 'recipe-media__image'})
 
-    img_src = img['src']
+    if(img != None):
+        img_src = img['src']
+    else:
+        img_src = None
 
-    data_row = [title, None, f.getTime(prep_time, cook_time), int(is_veg), f.getMeats(ingredients_string), ]
+    data_row = [title, cuisine, f.getTime(prep_time, cook_time), int(is_veg), f.getMeats(ingredients_string),
+        f.isSpicy(ingredients_string), f.getVegetables(ingredients_string), img_src, json.dumps(ingredient_list), json.dumps(steps_list)]
 
+    return data_row
 
-
-def fileExists(file_name, directory):
-    if('.' not in file_name):
-        file_name += '.csv'
-    return Path(directory, file_name).is_file()
-
-def filesExist(file_names, directory):
-    for file_name in file_names:
-        if(not fileExists(file_name, directory)):
-            return False
-    return True
-
-def dataToCsv(data, file_path, file_name, header=None, overwrite=True):
-    '''
-        (list of str, str) -> None
-        Precondition: file_name contains extension
-        Writes the given data to a csv file of name file_name
-    '''
-
-    method = 'w'
-    if(not overwrite):
-        method = 'a'
-
-    file_exists = fileExists(file_name, file_path)
-
-    with open(file_path + file_name, method) as csv_file:
-        writer = csv.writer(csv_file, lineterminator='\n')
-        if(not file_exists and not overwrite):
-            writer.writerow(header)
-        elif(overwrite):
-            data = [header] + data
-        writer.writerows(data)
-
-
-
-
+scrape_cuisines()
 
 
