@@ -1,4 +1,5 @@
 import re
+import json
 
 def getTime(prep, cook):
     prepTime = re.findall(r"(\b[1-9]\b|\b[1-9][0-9]\b).((\bhour\b|\bhours\b)|(\bmin\b|\bmins\b))", prep);
@@ -41,4 +42,9 @@ def getTime(prep, cook):
 
     return output;
 
-print(getTime("30 mins to 1 hour", "1 to 1 mins"));
+def getMeats(ingredients):
+    meats = re.findall(r"(anchovies|sausage|beef|pork|pancetta|ham|salami|chicken|bison|veal|goat|salmon|tuna|shrimp|tilapia|halibut|cod|sole|perch|catfish|trout|lobster|crab|bacon)", ingredients, flags=re.IGNORECASE);
+
+    return json.dumps(meats);
+
+print(getMeats("1 large shallot, roughly chopped 6 anchovies, roughly chopped 1 tsp Dijon mustard 2 tbsp roughly chopped mint leaves, stalks reserved 2 tbsp roughly chopped dill, stalks reserved 2 tbsp roughly chopped tarragon, stalks reserved 2 tbsp roughly chopped flatleaf parsley, stalks reserved 2 tbsp roughly chopped watercress, stalks reserved 2 tbsp torn fresh basil 4 tbsp extra virgin olive oil, plus extra for drizzling 2 tbsp capers, drained 3 lemons, halved 1.5kg/3lb 5oz whole trout, cleaned and gutted 400g/14oz new potatoes, par boiled sea salt and freshly ground black pepper"));
