@@ -1,5 +1,7 @@
 import re
+
 import json
+
 
 def getTime(prep, cook):
     prepTime = re.findall(r"(\b[1-9]\b|\b[1-9][0-9]\b).((\bhour\b|\bhours\b)|(\bmin\b|\bmins\b))", prep);
@@ -58,3 +60,4 @@ def isSpicy(ingredients):
         return 1;
     else:
         return 0;
+
