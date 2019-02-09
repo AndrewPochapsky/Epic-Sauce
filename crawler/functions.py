@@ -47,4 +47,14 @@ def getMeats(ingredients):
 
     return json.dumps(meats);
 
-print(getMeats("1 large shallot, roughly chopped 6 anchovies, roughly chopped 1 tsp Dijon mustard 2 tbsp roughly chopped mint leaves, stalks reserved 2 tbsp roughly chopped dill, stalks reserved 2 tbsp roughly chopped tarragon, stalks reserved 2 tbsp roughly chopped flatleaf parsley, stalks reserved 2 tbsp roughly chopped watercress, stalks reserved 2 tbsp torn fresh basil 4 tbsp extra virgin olive oil, plus extra for drizzling 2 tbsp capers, drained 3 lemons, halved 1.5kg/3lb 5oz whole trout, cleaned and gutted 400g/14oz new potatoes, par boiled sea salt and freshly ground black pepper"));
+def getVegetables(ingredients):
+    vegetables = re.findall(r"(artichoke|aubergine|asparagus|legumes|alfalfasprouts|azukibeans|beansprouts|blackbeans|black-eyedpeas|borlottibean|broadbeans|chickpeas|greenbeans|kidneybeans|lentils|limabeansorbutterbean|mungbeans|navybeans|pintobeans|runnerbeans|splitpeas|soybeans|peas|mangetout|snappeas|broccoflower|broccoli|brusselssprouts|cabbage|kohlrabi|cauliflower|celery|endive|fiddleheads|frisee|fennel|greens|beetgreens|bokchoy|chard|collardgreens|kale|mustardgreens|spinach|herbsandspices|anise|basil|caraway|cilantro|chamomile|dill|fennel|lavender|lemongrass|marjoram|oregano|parsley|rosemary|sage|thyme|lettuce|arugula|mushrooms|nettles|spinach|okra|onions|chives|garlic|leek|onion|shallot|scallion|parsley|peppers|bellpepper|chilipepper|jalapeño|habanero|paprika|tabascopepper|cayennepepper|radicchio|rhubarb|beetroot|mangel-wurzel|carrot|celeriac|corms|eddoe|konjac|taro|waterchestnut|ginger|parsnip|rutabaga|radish|wasabi|horseradish|whiteradish|daikon|tubers|jicama|jerusalemartichoke|potato|quandong|sunchokes|sweetpotato|yam|turnip|salsify|skirret|sweetcorn|topinambur|acornsquash|bittermelon|butternutsquash|bananasquash|courgette|cucumber|delicata|gemsquash|hubbardsquash|marrow|pattypans|pumpkin|spaghettisquash|tatsoi|tomato|watercress)", ingredients, flags=re.IGNORECASE);
+
+    return json.dumps(vegetables);
+
+def isSpicy(ingredients):
+    spice = re.findall(r"(chili|jalapeno|peppers|sriracha|tabasco)", ingredients, flags=re.IGNORECASE);
+    if(len(spice) > 0):
+        return 1;
+    else:
+        return 0;
