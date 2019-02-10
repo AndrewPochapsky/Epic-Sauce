@@ -21,6 +21,8 @@
             android:gravity="center"
             android:textSize="32dp"
             android:text="SAUCE OF THE DAY"
+            android:id="@+id/sod_title"
+            android:fontFamily="@font/Pacifico-Regular"
             />
         <TextView
             android:id="@+id/sauce_name"
@@ -70,18 +72,20 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
+                android:id="@+id/sauce_desciption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/oswald_light"
+                android:gravity="center"
                 android:text="adfhusodfnjoiioqefoifioiefiho
                 gfgfdsgfdgfdsgfdgfdsgdfggsfdgdsdfgsdfgsdfgsdfgsdfg
                 sdfgsdfgsdfgsdfgsdfgsdfgsdfsgdgdfsdfgdsfgdfsdfgdsgfd
                 sdfgfdsdfgsdfgsdfgsdfgsdfgsdfgsdfgdfsdfgsdfgsdfgsfdi\ns\nan\nadfn\nadfadf
                 gasfdgadfgadfgd\nasdgasdga\nasdgasdfgadfgad\nasdgfasdgfadfg\nadsgasdgadfga\nadgadf\n
                 asdgefdagdfg\nasdfgsdfgdfgadfg\n"
-                android:id="@+id/sauce_desciption"
-                android:gravity="center"
-                android:textSize="40sp"/>
+                android:textSize="40sp" />
         </ScrollView>
 
     </LinearLayout>

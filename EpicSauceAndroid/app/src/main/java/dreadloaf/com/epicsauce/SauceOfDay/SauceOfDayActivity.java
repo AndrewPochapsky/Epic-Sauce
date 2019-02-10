@@ -1,10 +1,12 @@
 package dreadloaf.com.epicsauce.SauceOfDay;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import dreadloaf.com.epicsauce.R;
 
@@ -15,11 +17,17 @@ public class SauceOfDayActivity extends AppCompatActivity  {
 //    public static final int SWIPE_VELOCITY_THRESHOLD = 100;
     //private GestureDetectorCompat detector;
 
+    Typeface typeface;
+    TextView mytv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sauce_of_day);
         //detector = new GestureDetectorCompat(this, this);
+        typeface = getResources().getFont(fonts/Pac)
+
+    }
     }
 
 //    @Override
@@ -73,4 +81,4 @@ public class SauceOfDayActivity extends AppCompatActivity  {
 //    private void onSwipeUp() {
 //
 //    }
-}
+
