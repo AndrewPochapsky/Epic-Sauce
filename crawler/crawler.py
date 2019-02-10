@@ -113,8 +113,8 @@ def scrape_recipie(url, cuisine):
         
         amount = ingredient.text
         if(ingredient.find('a') != None):
-            name = ingredient.find('a').text
-            ingredient_list.append(amount + name)
+            #name = ingredient.find('a').text
+            ingredient_list.append(amount)
         else:
             ingredient_list.append(amount)
 
