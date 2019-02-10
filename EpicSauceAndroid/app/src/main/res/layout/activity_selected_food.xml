@@ -1,50 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp"
+    android:background="#f0f0f5">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="32dp"
-        android:text="SELECTED FOOD"
-        />
-
-    <TextView
-        android:id="@+id/food_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="32dp"
-        android:text="Rice"
-        />
-
-    <ImageView
-        android:id="@+id/food_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/sriracha"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
 
-        <Button
+        <TextView
+            android:id="@+id/food_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight=".5"
-            android:text="Eat Out"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="32dp"
+            android:fontFamily="@font/oswald_bold"
+            android:text="Indian"
+            />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight=".5"
-            android:text="Recipe"/>
+        <android.support.v7.widget.CardView
+
+            android:layout_gravity="center_horizontal"
+            app:cardElevation="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/food_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/placeholder"/>
+
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:gravity="center|top"
+        android:orientation="vertical">
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center|top"-->
+        <!--android:text="up arrow"-->
+        <!--android:textSize="16sp" />-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center|top"
+            android:src="@drawable/minus"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_bold"
+                    android:text="Ingredients"
+                    android:gravity="center"
+                    android:textSize="40sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald"
+                    android:id="@+id/food_ingreients"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/oswald_bold"
+
+                    android:text="Directions"
+                    android:gravity="center"
+                    android:textSize="40sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/food_directions"
+                    android:fontFamily="@font/oswald"
+                    android:textSize="25sp"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

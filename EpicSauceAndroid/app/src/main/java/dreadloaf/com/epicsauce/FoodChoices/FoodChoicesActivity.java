@@ -18,6 +18,7 @@ import dreadloaf.com.epicsauce.FoodSelection.EpicSauceClient;
 import dreadloaf.com.epicsauce.FoodSelection.FoodInfo;
 import dreadloaf.com.epicsauce.FoodSelection.FoodSelectionActivity;
 import dreadloaf.com.epicsauce.R;
+import dreadloaf.com.epicsauce.SelectedFood.SelectedFoodActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +97,7 @@ public class FoodChoicesActivity extends AppCompatActivity implements FoodAdapte
         }
 
 
-        Intent intent = new Intent(FoodChoicesActivity.this, FoodChoicesActivity.class);
+        Intent intent = new Intent(FoodChoicesActivity.this, SelectedFoodActivity.class);
         intent.putExtra("name", mList.get(index).name);
         intent.putExtra("imageUrl", mList.get(index).imageUrl);
         intent.putExtra("time", mList.get(index).time);

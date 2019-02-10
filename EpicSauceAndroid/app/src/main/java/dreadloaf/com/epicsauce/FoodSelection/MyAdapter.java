@@ -63,7 +63,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
             }else if(option.equals("1")){
                 option = "Spicy";
             }
-
+            option = Character.toUpperCase(option.charAt(0)) + option.substring(1);
+            option = option.replaceAll("_", " ");
             mOptionText.setText(option);
             mIndex = index;
         }

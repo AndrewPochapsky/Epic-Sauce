@@ -4,6 +4,7 @@
     <item
         android:id="@+id/dont_care_tool_bar"
         android:title="skip"
+        android:fontFamily="@font/oswald"
 
         app:showAsAction="ifRoom"/>
 
