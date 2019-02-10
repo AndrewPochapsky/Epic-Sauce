@@ -37,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull OptionViewHolder optionViewHolder, int i) {
-        optionViewHolder.onBind(options[i]);
+        optionViewHolder.onBind(options[i], i);
     }
 
     @Override
@@ -49,6 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
     class OptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView mOptionText;
+        int mIndex;
 
         public OptionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,13 +57,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
             itemView.setOnClickListener(this);
         }
 
-        public void onBind(String option){
+        public void onBind(String option, int index){
+            if(option.equals("0")){
+                option = "Not Spicy";
+            }else if(option.equals("1")){
+                option = "Spicy";
+            }
+
             mOptionText.setText(option);
+            mIndex = index;
         }
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(1);
+            mListener.onClick(mIndex);
         }
     }
 }

@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-      <activity android:name=".FoodSelection.FoodSelectionActivity"></activity>
-
+        <activity android:name=".FoodSelection.FoodSelectionActivity"></activity>
+        <activity android:name=".FoodChoices.FoodChoicesActivity"></activity>
 
         <activity android:name=".SelectedFood.SelectedFoodActivity"></activity>
         <activity android:name=".SauceOfDay.SauceOfDayActivity"></activity>

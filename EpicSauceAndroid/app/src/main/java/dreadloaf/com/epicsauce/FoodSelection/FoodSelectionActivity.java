@@ -16,6 +16,7 @@ import com.google.gson.stream.JsonReader;
 import java.util.List;
 
 import dreadloaf.com.epicsauce.R;
+import dreadloaf.com.epicsauce.SelectedFood.SelectedFoodActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,11 +64,31 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         //API call is made here
 
         String userChoice = mOptions[index];
+        Log.e("USER", "user selected" + userChoice);
 
         //Vegetable
         if(mJson.equals("")){
             int value = conversion(userChoice, mNextValue);
             mJson = "\"isVegetarian\": " + value;
+        }else{
+            switch (mNextValue){
+                case "Meats":
+                    mJson += ",\"cuisine\":" + "\"" + userChoice + "\"";
+                    break;
+                case "isSpicy":
+                    mJson += ",\"meat\":" +  "\"" + userChoice + "\"";
+                    break;
+                case "Vegetables":
+                    //int spicyValue = conversion(userChoice, mNextValue);
+                    mJson += ",\"isSpicy\":" + userChoice;
+                    break;
+                case "Time":
+                    mJson += ",\"vegetables\":" + "\"" + userChoice + "\"";
+                    break;
+
+
+
+            }
         }
 
         Gson gson = new GsonBuilder()
@@ -79,32 +100,47 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         EpicSauceClient client =  retrofit.create(EpicSauceClient.class);
         Call<List<List<String>>> call = client.getFoodInfo("{" + mJson + "}", mNextValue, false);
         Log.e("JSON","{" + mJson + "}" );
-        call.enqueue(new Callback<List<List<String>>>() {
-            @Override
-            public void onResponse(Call<List<List<String>>> call, Response<List<List<String>>> response) {
-                Log.e("FOOD SElection", "success");
-                Log.e("FOODSLECTION", call.request().url().toString());
-                Log.e("FOODSLECTION", response.body().toString());
 
-                List<String> listOfOptions = response.body().get(0);
-                mOptions = new String[listOfOptions.size()];
-                for(int i = 0; i < listOfOptions.size(); i++){
-                    mOptions[i] = listOfOptions.get(i);
+        if(!mNextValue.equals("done")){
+            call.enqueue(new Callback<List<List<String>>>() {
+                @Override
+                public void onResponse(Call<List<List<String>>> call, Response<List<List<String>>> response) {
+                    //Log.e("FOOD SElection", "success");
+                    //Log.e("FOODSLECTION", call.request().url().toString());
+                    Log.e("FOODSLECTION", response.body().toString());
+
+                    List<String> listOfOptions = response.body().get(0);
+                    mOptions = new String[listOfOptions.size()];
+                    for(int i = 0; i < listOfOptions.size(); i++){
+                        mOptions[i] = listOfOptions.get(i);
+                    }
+
+
+
+                    intent.putExtra("options", mOptions);
+                    intent.putExtra("json", mJson);
+                    getNextValue();
+
+
+                    intent.putExtra("nextValue", mNextValue);
+                    startActivity(intent);
                 }
-                intent.putExtra("options", mOptions);
-                intent.putExtra("json", mJson);
-                intent.putExtra("nextValue", "Meat");
-                startActivity(intent);
-            }
 
-            @Override
-            public void onFailure(Call<List<List<String>>> call, Throwable t) {
-                Log.e("food", "Fail");
-                Log.e("FOOD SELECTION", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<List<List<String>>> call, Throwable t) {
+                    Log.e("food", "Fail");
+                    Log.e("FOOD SELECTION", t.getMessage());
+                }
+            });
+        }else{
+            //End of choices
+            //user is choosing time
+            mJson += ",\"time\":" + "\"" + userChoice + "\"";
 
-
+            Intent finalIntent = new Intent(FoodSelectionActivity.this, SelectedFoodActivity.class);
+            finalIntent.putExtra("json", mJson);
+            startActivity(finalIntent);
+        }
     }
 
 
@@ -117,17 +153,29 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
                 return 0;
             }
         }
-
-        //choice is regarding Spice
-        if(nextValue.equals("Vegetables")){
-            if(choice.equals("Spicy")){
-                return 1;
-            }else{
-                return 0;
-            }
-        }
+        
         return -1;
     }
 
+    private void getNextValue(){
+        String newValue = "";
+        switch (mNextValue){
+            case "Cuisine":
+                newValue = "Meats";
+                break;
+            case "Meats":
+                newValue = "isSpicy";
+                break;
+            case "isSpicy":
+                newValue = "Vegetables";
+                break;
+            case "Vegetables":
+                newValue = "Time";
+                break;
+            default:
+                newValue = "done";
+        }
+        mNextValue = newValue;
+    }
 }
 
