@@ -1,5 +1,6 @@
 package dreadloaf.com.epicsauce.FoodSelection;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +11,7 @@ import dreadloaf.com.epicsauce.R;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
-public class FoodSelectionActivity extends AppCompatActivity {
+public class FoodSelectionActivity extends AppCompatActivity implements MyAdapter.OnOptionClickedListener{
 
     RecyclerView mRecyclerView;
 
@@ -23,11 +24,23 @@ public class FoodSelectionActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
+        String[] options = null;
+        if(getIntent().hasExtra("options")){
+            options = getIntent().getStringArrayExtra("options");
+        }
 
-        String[] options = new String[] {"Pork", "Chicken", "Beef", "Rabbit", "Turtle"};
-        mRecyclerView.setAdapter(new MyAdapter(options));
+        mRecyclerView.setAdapter(new MyAdapter(options, this));
 
 
 
+    }
+
+    @Override
+    public void onClick(int index) {
+        Intent intent = new Intent(FoodSelectionActivity.this, FoodSelectionActivity.class);
+        //API call is made here
+        String[] options = new String[] {"Pork", "Chicken", "Beef", "Rabbit"};
+        intent.putExtra("options", options);
+        startActivity(intent);
     }
 }

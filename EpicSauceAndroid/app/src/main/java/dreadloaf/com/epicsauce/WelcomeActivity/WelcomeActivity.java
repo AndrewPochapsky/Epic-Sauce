@@ -33,7 +33,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         foodSelectionButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                startActivity(new Intent(WelcomeActivity.this, FoodSelectionActivity.class));
+                Intent intent = new Intent(WelcomeActivity.this, FoodSelectionActivity.class);
+                String[] options = new String[] {"Vegetarian", "Non-Vegetarian"};
+                intent.putExtra("options", options);
+                startActivity(intent);
             }
         });
 

@@ -13,10 +13,19 @@ import dreadloaf.com.epicsauce.R;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
 
+
+    public interface OnOptionClickedListener{
+        void onClick(int index);
+    }
+
     private String[] options;
 
-    public MyAdapter(String[] options){
+    OnOptionClickedListener mListener;
+
+    public MyAdapter(String[] options, OnOptionClickedListener listener){
         this.options = options;
+        mListener = listener;
+
     }
 
     @NonNull
@@ -37,17 +46,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.OptionViewHolder>{
     }
 
 
-    class OptionViewHolder extends RecyclerView.ViewHolder{
+    class OptionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView mOptionText;
 
         public OptionViewHolder(@NonNull View itemView) {
             super(itemView);
             mOptionText = itemView.findViewById(R.id.option_text);
+            itemView.setOnClickListener(this);
         }
 
         public void onBind(String option){
             mOptionText.setText(option);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(1);
         }
     }
 }
