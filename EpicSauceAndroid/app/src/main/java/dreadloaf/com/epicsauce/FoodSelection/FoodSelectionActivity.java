@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,6 +42,13 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_selection);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+
         mRecyclerView = findViewById(R.id.options_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -56,6 +67,31 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
 
 
 
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.e("MENU", "THIS IS RUNNING");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.custom_nav_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.dont_care_tool_bar){
+            Intent intent = new Intent(FoodSelectionActivity.this, FoodSelectionActivity.class);
+            intent.putExtra("options", mOptions);
+            intent.putExtra("json", mJson);
+            getNextValue();
+
+
+            intent.putExtra("nextValue", mNextValue);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -153,7 +189,7 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
                 return 0;
             }
         }
-        
+
         return -1;
     }
 
