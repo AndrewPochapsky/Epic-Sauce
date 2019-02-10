@@ -15,19 +15,23 @@
         android:orientation="vertical"
         android:padding="10dp"
         >
+
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/oswald_bold"
             android:gravity="center"
-            android:textSize="32dp"
             android:text="SAUCE OF THE DAY"
-            />
+            android:textSize="32sp" />
         <TextView
             android:id="@+id/sauce_name"
+            android:fontFamily="@font/oswald"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="32dp"
+
+            android:textSize="32sp"
             android:text="Indian"
             />
 
@@ -42,7 +46,7 @@
             <ImageView
                 android:id="@+id/sauce_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/sriracha"/>
 
@@ -68,20 +72,19 @@
             android:layout_gravity="center|top"
             android:src="@drawable/minus"/>
         <ScrollView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
+                android:id="@+id/sauce_desciption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="adfhusodfnjoiioqefoifioiefiho
-                gfgfdsgfdgfdsgfdgfdsgdfggsfdgdsdfgsdfgsdfgsdfgsdfg
-                sdfgsdfgsdfgsdfgsdfgsdfgsdfsgdgdfsdfgdsfgdfsdfgdsgfd
-                sdfgfdsdfgsdfgsdfgsdfgsdfgsdfgsdfgdfsdfgsdfgsdfgsfdi\ns\nan\nadfn\nadfadf
-                gasfdgadfgadfgd\nasdgasdga\nasdgasdfgadfgad\nasdgfasdgfadfg\nadsgasdgadfga\nadgadf\n
-                asdgefdagdfg\nasdfgsdfgdfgadfg\n"
-                android:id="@+id/sauce_desciption"
+                android:fontFamily="@font/oswald"
                 android:gravity="center"
-                android:textSize="40sp"/>
+
+                android:textSize="30sp" />
         </ScrollView>
 
     </LinearLayout>

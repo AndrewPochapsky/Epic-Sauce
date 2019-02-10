@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -32,11 +33,17 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class FoodSelectionActivity extends AppCompatActivity implements MyAdapter.OnOptionClickedListener{
 
+
+    public static boolean isVeg = false;
+
     RecyclerView mRecyclerView;
+    TextView mNavBarTitle;
+
 
     String[] mOptions;
     String mJson;
     String mNextValue;
+
 
 
     @Override
@@ -51,6 +58,8 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         }
 
 
+
+        mNavBarTitle = findViewById(R.id.navbar_title);
         mRecyclerView = findViewById(R.id.options_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -68,7 +77,7 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
 
         mRecyclerView.setAdapter(new MyAdapter(mOptions, this));
 
-
+        setTitle();
 
     }
 
@@ -96,6 +105,7 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
                 Intent finalIntent = new Intent(FoodSelectionActivity.this, FoodChoicesActivity.class);
                 finalIntent.putExtra("json", mJson);
                 startActivity(finalIntent);
+
             }
 
         }
@@ -114,6 +124,9 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         if(mJson.equals("")){
             int value = conversion(userChoice, mNextValue);
             mJson = "\"isVegetarian\": " + value;
+            if(value == 1){
+                isVeg = true;
+            }
         }else{
             switch (mNextValue){
                 case "Meats":
@@ -156,11 +169,16 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
                 .create();
 
 
+        if(mNextValue.equals("Meats") && isVeg){
+            getNextValue();
+        }
+
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl("http://178.128.224.49").addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         EpicSauceClient client =  retrofit.create(EpicSauceClient.class);
         Call<List<List<String>>> call = client.getFoodInfo("{" + mJson + "}", mNextValue, false);
         Log.e("JSON","{" + mJson + "}" );
+
 
         call.enqueue(new Callback<List<List<String>>>() {
             @Override
@@ -183,6 +201,7 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
                 }else{
                     intent.putExtra("json", mJson);
                 }
+
 
                 getNextValue();
 
@@ -232,5 +251,30 @@ public class FoodSelectionActivity extends AppCompatActivity implements MyAdapte
         }
         mNextValue = newValue;
     }
+
+    private void setTitle(){
+
+        switch (mNextValue){
+            case "Cuisine":
+                mNavBarTitle.setText("Choose");
+                break;
+            case "Meats":
+                mNavBarTitle.setText("Choose a cuisine");
+                break;
+            case "isSpicy":
+                mNavBarTitle.setText("Choose a meat");
+                break;
+            case "Vegetables":
+                mNavBarTitle.setText("Choose a spice level");
+                break;
+            case "Time":
+                mNavBarTitle.setText("Choose a vegetable");
+                break;
+            default:
+                mNavBarTitle.setText("Choose a preparation time");
+        }
+
+    }
+
 }
 

@@ -24,8 +24,11 @@ public class SelectedFoodActivity extends AppCompatActivity {
         Intent p = getIntent();
 
         foodNameText.setText(p.getStringExtra("name"));
-        new DownloadImageTask(image)
-                .execute(p.getStringExtra("imageUrl"));
+        if(!p.getStringExtra("imageUrl").equals("")){
+            new DownloadImageTask(image)
+                    .execute(p.getStringExtra("imageUrl"));
+        }
+
 
         String[] ingredients = p.getStringArrayExtra("ingredients");
         String[] directions = p.getStringArrayExtra("directions");
