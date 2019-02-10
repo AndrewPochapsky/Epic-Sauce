@@ -11,4 +11,7 @@ public interface EpicSauceClient {
 
     @GET("/api/food/getFood.php")
     Call<List<List<String>>> getFoodInfo(@Query("data") String json, @Query("nextValue") String next, @Query("showOutput") boolean showOutput);
+
+    @GET("/api/food/getFood.php")
+    Call<List<List<FoodInfo>>> getMealInfo(@Query("data") String json, @Query("showOutput") boolean showOutput);
 }
