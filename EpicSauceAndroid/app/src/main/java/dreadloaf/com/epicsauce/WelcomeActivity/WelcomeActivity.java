@@ -36,6 +36,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(WelcomeActivity.this, FoodSelectionActivity.class);
                 String[] options = new String[] {"Vegetarian", "Non-Vegetarian"};
                 intent.putExtra("options", options);
+                intent.putExtra("nextValue", "Cuisine");
+                intent.putExtra("json", "");
                 startActivity(intent);
             }
         });
