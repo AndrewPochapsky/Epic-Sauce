@@ -1,11 +1,13 @@
 <?php
-  ini_set('memory_limit','128M');
-
   require_once("../../inc/db.php");
 
   $data = json_decode($_GET["data"]);
 
-  $sql = "SELECT * FROM foods WHERE isVegetarian = $data->isVegetarian";
+  $sql = "SELECT * FROM foods";
+
+  if(isset($data->isVegetarian)) {
+    $sql .= " WHERE isVegetarian = '$data->isVegetarian'";
+  }
 
   if(isset($data->isSpicy)) {
     $sql .= " AND isSpicy = $data->isSpicy";
@@ -25,6 +27,8 @@
       // output data of each row
       while($row = $result->fetch_assoc()) {
           $rows[] = $row;
+          $rows[sizeof($rows)-1]["Ingredients"] = json_decode($rows[sizeof($rows)-1]["Ingredients"]);
+          $rows[sizeof($rows)-1]["Directions"] = json_decode($rows[sizeof($rows)-1]["Directions"]);
       }
   }
   $out = $rows;
