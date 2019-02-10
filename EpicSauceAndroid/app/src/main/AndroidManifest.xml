@@ -12,6 +12,8 @@
 
       <activity android:name=".FoodSelection.FoodSelectionActivity"></activity>
 
+
+        <activity android:name=".SelectedFood.SelectedFoodActivity"></activity>
         <activity android:name=".SauceOfDay.SauceOfDayActivity"></activity>
         <activity android:name=".WelcomeActivity.WelcomeActivity">
 
