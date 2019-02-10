@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="68dp"
+    sothree:umanoPanelHeight="30dp"
     sothree:umanoShadowHeight="4dp">
 
     <TextView
@@ -16,10 +16,37 @@
         android:text="Main Content"
         android:textSize="16sp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|top"
-        android:text="The Awesome Sliding Up Panel"
-        android:textSize="16sp" />
+        android:gravity="top|center"
+        android:orientation="vertical"
+        android:id="@+id/thing">
+
+
+
+        <TextView
+            android:id="@+id/sauce_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textSize="20dp"
+            android:text="this \nsauce \nis very \ntasty yummmy."
+            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy.this \nsauce \nis very \ntasty yummmy."
+
+                />
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
